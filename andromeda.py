@@ -1,7 +1,11 @@
-import pygame
+import pygame, random
+pygame.init()
 
 X_MAX = 800
 Y_MAX = 600
+size = (800, 600)
+speed = [5,5]
+
 
 class Spaceship(pygame.sprite.Sprite):
     def __init__(self):
@@ -22,28 +26,41 @@ class Asteroid(pygame.sprite.Sprite):
         #self.image = pygame.transform.smoothscale(self.image, (50, 50))
         self.rect = self.image.get_rect()
         self.rect.center = (X_MAX/2, Y_MAX - 400)
-        
+
+    def update(self):
+        if self.rect.left < 0 or self.rect.right > X_MAX:
+            speed[0] = -speed[0]
+        if self.rect.top < 0 or self.rect.bottom > Y_MAX:
+            speed[1] = -speed[1]
+
+        self.rect = self.rect.move(speed)
+
+    def draw(self, screen):
+        screen.blit(self.image, self.rect)
+
+
 def main():
  
-    pygame.init() 
-    screen = pygame.display.set_mode((800,600))
+    screen = pygame.display.set_mode(size)
     pygame.display.set_caption("Andromeda")  
 
     background = pygame.image.load('images/background1.jpg').convert()
-    background = pygame.transform.scale(background, (800, 600))
-    screen.blit(background, (0,0))
+    background = pygame.transform.scale(background, size)
+    # screen.blit(background, (0,0))
 
-    ship = Spaceship()
+    all_sprites_list = pygame.sprite.Group()
     asteroid = Asteroid()
-    obj_group = pygame.sprite.Group(ship, asteroid)
+    ship = Spaceship()
+    all_sprites_list.add(ship, asteroid)
 
     while True:
         event = pygame.event.poll()    
         if event.type == pygame.QUIT:  
             break 
 
-        obj_group.update()
-        obj_group.draw(screen)
+        screen.blit(background, (0,0))
+        all_sprites_list.draw(screen)
+        all_sprites_list.update()
         pygame.display.flip()
 
     pygame.quit()     
