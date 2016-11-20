@@ -1,19 +1,21 @@
 import pygame, random
-pygame.init()
 
-from pygame.locals import Rect, DOUBLEBUF, QUIT, K_ESCAPE, KEYDOWN, K_DOWN, \
-    K_LEFT, K_UP, K_RIGHT, KEYUP, K_LCTRL, K_RETURN, FULLSCREEN
+# from pygame.locals import Rect, DOUBLEBUF, QUIT, K_ESCAPE, KEYDOWN, K_DOWN, \
+#     K_LEFT, K_UP, K_RIGHT, KEYUP, K_LCTRL, K_RETURN, FULLSCREEN
+
+# LEFT, RIGHT, UP, DOWN = 0, 1, 3, 4
+# START, STOP = 0, 1
 
 X_MAX, Y_MAX = 800, 600
+
+#still playing with speeds
 speed = [4,4]
 speed2 = [5,5]
 speed3 = [6,6]
+speed4 = [3,3]
+speed5 = [2,2]
+speed6 = [6,6]
 
-
-LEFT, RIGHT, UP, DOWN = 0, 1, 3, 4
-START, STOP = 0, 1
-
-everything = pygame.sprite.Group()
 
 class Spaceship(pygame.sprite.Sprite):
     def __init__(self):
@@ -75,7 +77,6 @@ class Asteroid3(pygame.sprite.Sprite):
         self.x = init_x = random.randint(0+70, 800-70)
         self.y = init_y = random.randint(0+70,600-70)
         self.rect.center = (self.x, self.y)
-        #self.rect.center = (init_x, init_y) = (X_MAX/2, Y_MAX - 400)
 
     def update(self):
         if self.rect.left < 0 or self.rect.right > X_MAX:
@@ -84,29 +85,83 @@ class Asteroid3(pygame.sprite.Sprite):
             speed3[1] = -speed3[1]
 
         self.rect = self.rect.move(speed3)
-   
+
+class Asteroid4(pygame.sprite.Sprite):
+    def __init__(self, init_x, init_y):
+        super(Asteroid4, self).__init__()
+        self.image = pygame.image.load("images/asteroid_md_1.png").convert_alpha()
+        #self.size = self.image.get_size()
+        #self.image = pygame.transform.smoothscale(self.image, (int(self.size[0]/5), int(self.size[1]/5)))
+        self.image = pygame.transform.smoothscale(self.image, (60, 60))
+        self.rect = self.image.get_rect()
+        self.x = init_x = random.randint(0+70, 800-70)
+        self.y = init_y = random.randint(0+70,600-70)
+        self.rect.center = (self.x, self.y)
+
+    def update(self):
+        if self.rect.left < 0 or self.rect.right > X_MAX:
+            speed4[0] = -speed4[0]
+        if self.rect.top < 0 or self.rect.bottom > Y_MAX:
+            speed4[1] = -speed4[1]
+
+        self.rect = self.rect.move(speed4)
+
+class Asteroid5(pygame.sprite.Sprite):
+    def __init__(self, init_x, init_y):
+        super(Asteroid5, self).__init__()
+        self.image = pygame.image.load("images/asteroid_md_2.png").convert_alpha()
+        #self.size = self.image.get_size()
+        #self.image = pygame.transform.smoothscale(self.image, (int(self.size[0]/5), int(self.size[1]/5)))
+        self.image = pygame.transform.smoothscale(self.image, (60, 60))
+        self.rect = self.image.get_rect()
+        self.x = init_x = random.randint(0+70, 800-70)
+        self.y = init_y = random.randint(0+70,600-70)
+        self.rect.center = (self.x, self.y)
+
+    def update(self):
+        if self.rect.left < 0 or self.rect.right > X_MAX:
+            speed5[0] = -speed5[0]
+        if self.rect.top < 0 or self.rect.bottom > Y_MAX:
+            speed5[1] = -speed5[1]
+
+        self.rect = self.rect.move(speed5)
+
+class Asteroid6(pygame.sprite.Sprite):
+    def __init__(self, init_x, init_y):
+        super(Asteroid6, self).__init__()
+        self.image = pygame.image.load("images/asteroid_md_3.png").convert_alpha()
+        #self.size = self.image.get_size()
+        #self.image = pygame.transform.smoothscale(self.image, (int(self.size[0]/5), int(self.size[1]/5)))
+        self.image = pygame.transform.smoothscale(self.image, (60, 60))
+        self.rect = self.image.get_rect()
+        self.x = init_x = random.randint(0+70, 800-70)
+        self.y = init_y = random.randint(0+70,600-70)
+        self.rect.center = (self.x, self.y)
+
+    def update(self):
+        if self.rect.left < 0 or self.rect.right > X_MAX:
+            speed6[0] = -speed6[0]
+        if self.rect.top < 0 or self.rect.bottom > Y_MAX:
+            speed6[1] = -speed6[1]
+
+        self.rect = self.rect.move(speed6)
 
 def main():
- 
+
+    pygame.init()
     screen = pygame.display.set_mode((X_MAX, Y_MAX))
     pygame.display.set_caption("Andromeda")  
 
     background = pygame.image.load('images/background1.jpg').convert()
     background = pygame.transform.scale(background, (X_MAX, Y_MAX))
 
-    # asteroid_list = []
-    # for i in range(1,4):
-    #     asteroid = Asteroid(0,0)
-    #     asteroid.update()
-    #     asteroid_list.append(asteroid)
-
-    all_sprites_list = pygame.sprite.Group()
+    all_sprites = pygame.sprite.Group()
     asteroids = pygame.sprite.Group()
 
     ship = Spaceship()
-    asteroids.add(Asteroid(0,0), Asteroid2(0,0), Asteroid3(0,0))
+    asteroids.add(Asteroid(0,0), Asteroid2(0,0), Asteroid3(0,0), Asteroid4(0,0), Asteroid5(0,0), Asteroid6(0,0))
 
-    all_sprites_list.add(ship, asteroids)
+    all_sprites.add(ship, asteroids)
 
 
     while True:
@@ -115,8 +170,8 @@ def main():
             break 
 
         screen.blit(background, (0,0))
-        all_sprites_list.draw(screen)
-        all_sprites_list.update()
+        all_sprites.draw(screen)
+        all_sprites.update()
         pygame.display.flip()
 
     pygame.quit()
