@@ -5,7 +5,7 @@ from pygame.locals import QUIT, K_ESCAPE, KEYDOWN, K_DOWN, K_LEFT, K_UP, K_RIGHT
 
 X_MAX, Y_MAX = 800, 600
 
-speed = [4,4]
+speed1 = [4,4]
 speed2 = [5,5]
 speed3 = [1,1]
 speed4 = [3,3]
@@ -24,17 +24,17 @@ class Asteroid(pygame.sprite.Sprite):
         #self.image = pygame.transform.smoothscale(self.image, (int(self.size[0]/5), int(self.size[1]/5)))
         self.image = pygame.transform.smoothscale(self.image, (60, 60))
         self.rect = self.image.get_rect()
-        self.x = init_x = random.randint(0+70, 800-70)
-        self.y = init_y = random.randint(0+70,600-70)
+        self.x = init_x = random.randint(0+60, 800-60)
+        self.y = init_y = random.randint(0+60,600-60)
         self.rect.center = (self.x, self.y)
 
     def update(self):
         if self.rect.left < 0 or self.rect.right > X_MAX:
-            speed[0] = -speed[0]
+            speed1[0] = -speed1[0]
         if self.rect.top < 0 or self.rect.bottom > Y_MAX:
-            speed[1] = -speed[1]
+            speed1[1] = -speed1[1]
 
-        self.rect = self.rect.move(speed)
+        self.rect = self.rect.move(speed1)
 
 class Asteroid2(pygame.sprite.Sprite):
     def __init__(self, init_x, init_y):
@@ -146,19 +146,16 @@ class Spaceship(pygame.sprite.Sprite):
         self.dx = self.dy = 0
         self.autopilot = False
         self.in_position = False
-        self.firing = self.shot = False
         self.velocity = 0
         self.health = 100
         self.score = 0
+
 
     def update(self):
         x, y = self.rect.center
 
         if not self.autopilot:
             self.rect.center = x + self.dx, y + self.dy
-
-            # if self.firing == True:
-            #     self.shot = Particle(x,y) 
 
         else:
             if not self.in_position:
@@ -209,26 +206,13 @@ class Spaceship(pygame.sprite.Sprite):
             if direction in (LEFT, RIGHT):
                 self.dx = 0
 
-    # def shoot(self, operation):
-    #     if operation == START:
-    #         self.firing = True
-    #     if operation == STOP:
-    #         self.firing == False
+    def shoot(self, operation):
+        if operation == START:
+            self.firing = True
+        if operation == STOP:
+            self.firing == False
 
-# class Particle(pygame.sprite.Sprite):
-#     def __init__(self, x, y):
-#         super(Particle, self).__init__()
-#         self.image = pygame.Surface((10, 10))
-#         pygame.draw.circle(self.image, (255, 255, 255), (5, 5), 5, 0)
-#         self.rect = self.image.get_rect()
-#         self.rect.center = (x, y-40)
-
-#     def update(self):
-#         x, y = self.rect.center
-#         y -= 20
-#         self.rect.center = x, y
-#         if y <= 0:
-#             self.kill()
+#Bullet class
 
 class Status(pygame.sprite.Sprite):
     def __init__(self, ship):
@@ -236,16 +220,35 @@ class Status(pygame.sprite.Sprite):
         self.image = pygame.Surface((X_MAX, 30))
         self.rect = self.image.get_rect()
         self.rect.bottomleft = 25, Y_MAX
-
         self.font = pygame.font.Font("ScreenMatrix.ttf", 22)
-
         self.ship = ship
 
     def update(self):
         score = self.font.render("Health : {} Score : {}".format(
             self.ship.health, self.ship.score), True, (255, 255, 255)) 
-        self.image.set_colorkey((0, 0, 0))
+        self.image.fill((0, 0, 0))
         self.image.blit(score, (0, 0))
+        self.image.set_colorkey((0, 0, 0))
+
+class Lose(pygame.sprite.Sprite):
+    def __init__(self, ship):
+        super(Lose, self).__init__()
+        self.image = pygame.Surface((200, 100))
+        self.rect = self.image.get_rect()
+        self.rect.center = (X_MAX/2, Y_MAX/2)
+        self.font = pygame.font.Font("ScreenMatrix.ttf", 33)
+        self.ship = ship
+
+    def update(self):
+        sorry = self.font.render("GAME OVER", True, (255, 255, 255))
+        self.image.fill((0, 0, 0))
+        self.image.set_colorkey((0, 0, 0))
+        if self.ship.health < 0:
+            self.image.blit(sorry, (20, 40))
+            self.ship.kill()
+             
+#in a similar fashion as the Lose and Status objects, I'll add Start and Win objects
+
 
 def main():
 
@@ -260,10 +263,11 @@ def main():
 
     ship = Spaceship()
     status = Status(ship)
+    lose = Lose(ship)
 
     asteroids.add(Asteroid(0,0), Asteroid2(0,0), Asteroid3(0,0), Asteroid4(0,0), Asteroid5(0,0), Asteroid6(0,0))
 
-    all_sprites.add(ship, status, asteroids)
+    all_sprites.add(ship, status, lose, asteroids)
 
     game_over = False
 
@@ -284,7 +288,6 @@ def main():
                     if event.key == K_LCTRL:
                         ship.shoot(START)
 
-
                 if event.type == KEYUP:
                     if event.key == K_DOWN:
                         ship.steer(DOWN, STOP)
@@ -298,11 +301,13 @@ def main():
                     if event.key == K_LCTRL:
                         ship.shoot(STOP)
 
-        # hits = pygame.sprite.spritecollide(ship, asteroids, True)
-        # for hit in hits:
-        #     ship.health -= 15
+        hits = pygame.sprite.spritecollide(ship, asteroids, True)
+        for hit in hits:
+            ship.health -= 20
 
-        #add regenerative loop to create more asteroids once too many have been killed
+        # hits = pygame.sprite.spritecollide(asteroids, weaponfire, True)
+        # for hit in hits:
+        #     ship.score += 10
 
         screen.blit(background, (0,0))
         all_sprites.update()
