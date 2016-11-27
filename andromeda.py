@@ -1,5 +1,5 @@
 import pygame, random
-pygame.init();
+pygame.init()
 
 from pygame.locals import QUIT, KEYDOWN, K_DOWN, K_LEFT, K_UP, K_RIGHT, KEYUP, K_SPACE, K_RETURN
 
@@ -7,10 +7,13 @@ X_MAX, Y_MAX = 800, 600
 
 speed1 = [4,4]
 speed2 = [5,5]
-speed3 = [1,1]
+speed3 = [6,6]
 speed4 = [3,3]
 speed5 = [2,2]
 speed6 = [6,6]
+speed7 = [10,10]
+speed8 = [11,11]
+speed9 = [9,9]
 
 LEFT, RIGHT, UP, DOWN = 0, 1, 3, 4
 START, STOP = 0, 1
@@ -19,28 +22,32 @@ START, STOP = 0, 1
 class Start(pygame.sprite.Sprite):
     def __init__(self):
         super(Start, self).__init__()
-        self.image = pygame.Surface((300, 100))
+        self.image = pygame.Surface((500, 200))
         self.rect = self.image.get_rect()
         self.rect.center = (X_MAX/2, Y_MAX/2)
-        self.font = pygame.font.Font("fonts/ScreenMatrix.ttf", 30)
+        self.font = pygame.font.Font("fonts/ScreenMatrix.ttf", 25)
+        self.font2 = pygame.font.Font("fonts/ScreenMatrix.ttf", 40)
 
     def update(self):
-        begin = self.font.render("PRESS ENTER TO START", True, (255, 255, 255))
+        title = self.font2.render("ANDROMEDA", True, (3, 168, 158))
+        begin = self.font.render("Press Enter To Start", True, (255, 255, 255))
         self.image.fill((0, 0, 0))
         self.image.set_colorkey((0, 0, 0))
-        self.image.blit(begin, (30, 30))
+        self.image.blit(title, (150, 60))
+        self.image.blit(begin, (115, 110))
 
-class Asteroid(pygame.sprite.Sprite):
+#Alien sprite
+
+class Asteroid1(pygame.sprite.Sprite):
     def __init__(self):
-        super(Asteroid, self).__init__()
+        super(Asteroid1, self).__init__()
         self.image = pygame.image.load("images/asteroid_lg_1.png").convert_alpha()
-        #self.size = self.image.get_size()
-        #self.image = pygame.transform.smoothscale(self.image, (int(self.size[0]/5), int(self.size[1]/5)))
         self.image = pygame.transform.smoothscale(self.image, (60, 60))
         self.rect = self.image.get_rect()
-        self.x = init_x = random.randint(0+60, 800-60)
-        self.y = init_y = random.randint(0+60,600-60)
+        self.x = random.randint(0+60, 800-60)
+        self.y = random.randint(0+60,600-60)
         self.rect.center = (self.x, self.y)
+
 
     def update(self):
         if self.rect.left < 0 or self.rect.right > X_MAX:
@@ -50,16 +57,15 @@ class Asteroid(pygame.sprite.Sprite):
 
         self.rect = self.rect.move(speed1)
 
+
 class Asteroid2(pygame.sprite.Sprite):
     def __init__(self):
         super(Asteroid2, self).__init__()
         self.image = pygame.image.load("images/asteroid_lg_2.png").convert_alpha()
-        #self.size = self.image.get_size()
-        #self.image = pygame.transform.smoothscale(self.image, (int(self.size[0]/5), int(self.size[1]/5)))
         self.image = pygame.transform.smoothscale(self.image, (60, 60))
         self.rect = self.image.get_rect()
-        self.x = init_x = random.randint(0+70, 800-70)
-        self.y = init_y = random.randint(0+70,600-70)
+        self.x = random.randint(0+70, 800-70)
+        self.y = random.randint(0+70,600-70)
         self.rect.center = (self.x, self.y)
 
     def update(self):
@@ -74,12 +80,10 @@ class Asteroid3(pygame.sprite.Sprite):
     def __init__(self):
         super(Asteroid3, self).__init__()
         self.image = pygame.image.load("images/asteroid_lg_3.png").convert_alpha()
-        #self.size = self.image.get_size()
-        #self.image = pygame.transform.smoothscale(self.image, (int(self.size[0]/5), int(self.size[1]/5)))
         self.image = pygame.transform.smoothscale(self.image, (60, 60))
         self.rect = self.image.get_rect()
-        self.x = init_x = random.randint(0+70, 800-70)
-        self.y = init_y = random.randint(0+70,600-70)
+        self.x = random.randint(0+70, 800-70)
+        self.y = random.randint(0+70,600-70)
         self.rect.center = (self.x, self.y)
 
     def update(self):
@@ -94,12 +98,10 @@ class Asteroid4(pygame.sprite.Sprite):
     def __init__(self):
         super(Asteroid4, self).__init__()
         self.image = pygame.image.load("images/asteroid_md_1.png").convert_alpha()
-        #self.size = self.image.get_size()
-        #self.image = pygame.transform.smoothscale(self.image, (int(self.size[0]/5), int(self.size[1]/5)))
         self.image = pygame.transform.smoothscale(self.image, (60, 60))
         self.rect = self.image.get_rect()
-        self.x = init_x = random.randint(0+70, 800-70)
-        self.y = init_y = random.randint(0+70,600-70)
+        self.x = random.randint(0+70, 800-70)
+        self.y = random.randint(0+70,600-70)
         self.rect.center = (self.x, self.y)
 
     def update(self):
@@ -114,8 +116,6 @@ class Asteroid5(pygame.sprite.Sprite):
     def __init__(self):
         super(Asteroid5, self).__init__()
         self.image = pygame.image.load("images/asteroid_md_2.png").convert_alpha()
-        #self.size = self.image.get_size()
-        #self.image = pygame.transform.smoothscale(self.image, (int(self.size[0]/5), int(self.size[1]/5)))
         self.image = pygame.transform.smoothscale(self.image, (60, 60))
         self.rect = self.image.get_rect()
         self.x = init_x = random.randint(0+70, 800-70)
@@ -134,8 +134,6 @@ class Asteroid6(pygame.sprite.Sprite):
     def __init__(self):
         super(Asteroid6, self).__init__()
         self.image = pygame.image.load("images/asteroid_md_3.png").convert_alpha()
-        #self.size = self.image.get_size()
-        #self.image = pygame.transform.smoothscale(self.image, (int(self.size[0]/5), int(self.size[1]/5)))
         self.image = pygame.transform.smoothscale(self.image, (60, 60))
         self.rect = self.image.get_rect()
         self.x = init_x = random.randint(0+70, 800-70)
@@ -168,6 +166,9 @@ class Spaceship(pygame.sprite.Sprite):
         self.in_position = False
         self.velocity = 2
 
+        self.shotsfired = pygame.mixer.Sound("sounds/shotsfired.wav")
+        self.shotsfired.set_volume(0.3)
+
     def update(self):
         x, y = self.rect.center
 
@@ -176,6 +177,7 @@ class Spaceship(pygame.sprite.Sprite):
 
             if self.firing:
                 self.shot = Particle(x,y)
+                self.shotsfired.play(maxtime= 1000)
                 self.shot.add(self.groups)
 
         else:
@@ -197,7 +199,7 @@ class Spaceship(pygame.sprite.Sprite):
             #edit so that spaceship can't hide out beyond the screen
 
     def steer(self, direction, operation):
-        v = 8
+        v = 5
         if operation == START:
             if direction in (UP, DOWN):
                 self.dy = {UP: -v, DOWN: v}[direction]
@@ -222,30 +224,64 @@ class Particle(pygame.sprite.Sprite):
         super(Particle, self).__init__()
         self.image = pygame.Surface((2, 5))
         self.image.fill((255, 255, 255))
-        #maybe draw a more creative shape 
         self.rect = self.image.get_rect()
-        self.rect.center = (x-1, y-40)
+        self.rect.center = (x, y-40)
 
     def update(self):
-        self.rect.y -=15
+        self.rect.y -=10 #adjust so that bullets have a shorter lifespan
         if self.rect.y < -10:
             self.kill()
 
-# class Bits(pygame.sprite.Sprite):
-#     def __init__(self, asteroid):
-#         super(Bits, self).__init__()
-#         self.image = pygame.image.load("images/asteroid_sm_1.png").convert_alpha()
-#         self.image = pygame.transform.smoothscale(self.image, (30, 30))
-#         self.rect = self.image.get_rect()
-#         self.asteroid = asteroid
+class Bits(pygame.sprite.Sprite):
+    def __init__(self):
+        super(Bits, self).__init__()
+        self.image = pygame.image.load("images/asteroid_sm_2.png").convert_alpha()
+        self.image = pygame.transform.smoothscale(self.image, (30, 30))
+        self.rect = self.image.get_rect()
+        self.x = init_x = random.randint(0+30, 800-30)
+        self.y = init_y = random.randint(0+30,600-30)
 
-#     def update(self):
-#         if self.rect.left < 0 or self.rect.right > X_MAX:
-#             speed5[0] = -speed5[0]
-#         if self.rect.top < 0 or self.rect.bottom > Y_MAX:
-#             speed5[1] = -speed5[1]
+    def update(self):
+        if self.rect.left < 0 or self.rect.right > X_MAX:
+            speed7[0] = -speed7[0]
+        if self.rect.top < 0 or self.rect.bottom > Y_MAX:
+            speed7[1] = -speed7[1]
 
-#         self.rect = self.rect.move(speed5)
+        self.rect = self.rect.move(speed7)
+
+class Bits2(pygame.sprite.Sprite):
+    def __init__(self):
+        super(Bits2, self).__init__()
+        self.image = pygame.image.load("images/asteroid_sm_3.png").convert_alpha()
+        self.image = pygame.transform.smoothscale(self.image, (30, 30))
+        self.rect = self.image.get_rect()
+        self.x = init_x = random.randint(0+30, 800-30)
+        self.y = init_y = random.randint(0+30,600-30)
+
+    def update(self):
+        if self.rect.left < 0 or self.rect.right > X_MAX:
+            speed8[0] = -speed8[0]
+        if self.rect.top < 0 or self.rect.bottom > Y_MAX:
+            speed8[1] = -speed8[1]
+
+        self.rect = self.rect.move(speed8)
+
+class Bits3(pygame.sprite.Sprite):
+    def __init__(self):
+        super(Bits3, self).__init__()
+        self.image = pygame.image.load("images/asteroid_sm_1.png").convert_alpha()
+        self.image = pygame.transform.smoothscale(self.image, (30, 30))
+        self.rect = self.image.get_rect()
+        self.x = init_x = random.randint(0+30, 800-30)
+        self.y = init_y = random.randint(0+30,600-30)
+
+    def update(self):
+        if self.rect.left < 0 or self.rect.right > X_MAX:
+            speed9[0] = -speed9[0]
+        if self.rect.top < 0 or self.rect.bottom > Y_MAX:
+            speed9[1] = -speed9[1]
+
+        self.rect = self.rect.move(speed9)
 
 class Status(pygame.sprite.Sprite):
     def __init__(self, ship):
@@ -253,7 +289,7 @@ class Status(pygame.sprite.Sprite):
         self.image = pygame.Surface((X_MAX, 30))
         self.rect = self.image.get_rect()
         self.rect.bottomleft = 25, Y_MAX
-        self.font = pygame.font.Font("fonts/ScreenMatrix.ttf", 22)
+        self.font = pygame.font.Font("fonts/ScreenMatrix.ttf", 24)
         self.ship = ship
 
     def update(self):
@@ -264,7 +300,7 @@ class Status(pygame.sprite.Sprite):
         self.image.set_colorkey((0, 0, 0))
 
 class Lose(pygame.sprite.Sprite):
-    def __init__(self, ship, asteroids, status):
+    def __init__(self, ship, asteroids, asteroid_spawns, status):
         super(Lose, self).__init__()
         self.image = pygame.Surface((500, 200))
         self.rect = self.image.get_rect()
@@ -273,6 +309,7 @@ class Lose(pygame.sprite.Sprite):
         self.font2 = pygame.font.Font("fonts/ScreenMatrix.ttf", 30)
         self.ship = ship
         self.asteroids = asteroids
+        self.asteroid_spawns = asteroid_spawns
         self.status = status
 
     def update(self):
@@ -286,11 +323,23 @@ class Lose(pygame.sprite.Sprite):
             for asteroid in self.asteroids:
                 asteroid.kill()
             self.status.kill()
-            self.image.blit(sorry, (120, 80))
+            self.image.blit(sorry, (125, 80))
             self.image.blit(score, (132, 120))
-                      
+            defeat = pygame.mixer.Sound("sounds/defeat.wav").play()
+            #defeat.set_volume(0.7)
+
+        if self.ship.health > 0:
+            if self.ship.score < 60:
+                if len(self.asteroids) == 0:
+                    if len(self.asteroid_spawns) == 0:
+                        self.status.kill()
+                        self.ship.kill()
+                        self.image.blit(sorry, (125, 80))
+                        self.image.blit(score, (132, 120))
+
+                     
 class Win(pygame.sprite.Sprite):
-    def __init__(self, ship, asteroids, status):
+    def __init__(self, ship, asteroids, asteroid_spawns, status):
         super(Win, self).__init__()
         self.image = pygame.Surface((500, 200))
         self.rect = self.image.get_rect()
@@ -299,52 +348,65 @@ class Win(pygame.sprite.Sprite):
         self.font2 = pygame.font.Font("fonts/ScreenMatrix.ttf", 30)
         self.ship = ship
         self.asteroids = asteroids
+        self.asteroid_spawns = asteroid_spawns
         self.status = status       
 
     def update(self):
-        hurray = self.font.render("YOU WIN", True, (255, 255, 255))
+        hurray = self.font.render("YOU WIN!", True, (255, 255, 255))
         score = self.font2.render("High Score: {}".format(
             self.ship.score), True, (255, 255, 255))
         self.image.fill((0, 0, 0))
         self.image.set_colorkey((0, 0, 0))
-        if self.ship.score >= 20:
+        game_over = self.ship.score >= 60
+        if game_over:
             self.ship.kill()
             for asteroid in self.asteroids:
+                asteroid.kill()
+            for asteroid in self.asteroid_spawns:
                 asteroid.kill()
             self.status.kill()
             self.image.blit(hurray, (155, 80))
             self.image.blit(score, (132, 120))
+            victory = pygame.mixer.Sound("sounds/victory.wav").play()
+            #victory.set_volume(0.7)
 
-# def intro():
 
-#     screen = pygame.display.set_mode((X_MAX, Y_MAX))
-#     pygame.display.set_caption("Andromeda")  
+def intro():
 
-#     background = pygame.image.load('images/background1.jpg').convert()
-#     background = pygame.transform.scale(background, (X_MAX, Y_MAX))
+    screen = pygame.display.set_mode((X_MAX, Y_MAX))
+    pygame.display.set_caption("Andromeda")  
 
-#     start = Start()
-#     letsplay = pygame.sprite.Group()
-#     letsplay.add(start)
+    background = pygame.image.load('images/background1.jpg').convert()
+    background = pygame.transform.scale(background, (X_MAX, Y_MAX))
+    theme = pygame.mixer.Sound("sounds/andromeda.wav").play(loops= 10)
+    theme.set_volume(0.2)
 
-#     game_over = False
+    start = Start()
+    letsplay = pygame.sprite.Group()
+    letsplay.add(start)
+    #maybe add some form of static background animation?
 
-#     while not game_over:
-#         for event in pygame.event.get():
-#             if event.type == QUIT:
-#                 game_over = True
-#             if not game_over:
-#                 if event.type == KEYDOWN and event.key == K_RETURN:
-#                     return
+    game_over = False
 
-#         screen.blit(background, (0, 0))
-#         letsplay.update()
-#         letsplay.draw(screen)
-#         pygame.display.flip()
+    while not game_over:
+        for event in pygame.event.get():
+            if event.type == QUIT:
+                game_over = True
+            if not game_over:
+                if event.type == KEYDOWN and event.key == K_RETURN:
+                    theme.pause()
+                    letsgo = pygame.mixer.Sound("sounds/enteringgalaxy.wav").play()
+                    letsgo.set_volume(0.7)
+                    return
 
-#     pygame.quit()
+        screen.blit(background, (0, 0))
+        letsplay.update()
+        letsplay.draw(screen)
+        pygame.display.flip()
 
-# intro()
+    pygame.quit()
+
+intro()
 
 def main():
 
@@ -353,20 +415,23 @@ def main():
 
     background = pygame.image.load('images/background1.jpg').convert()
     background = pygame.transform.scale(background, (X_MAX, Y_MAX))
+    theme = pygame.mixer.Sound("sounds/andromeda.wav").play(loops= 10)
+    theme.set_volume(0.2)
 
     all_sprites = pygame.sprite.Group() 
-    asteroids = pygame.sprite.Group() 
+    asteroids = pygame.sprite.Group()
+    asteroid_spawns = pygame.sprite.Group() 
     weaponfire = pygame.sprite.Group() 
 
     ship = Spaceship(all_sprites, weaponfire)
-    #bits = Bits(asteroids)
     status = Status(ship)
-    lose = Lose(ship, asteroids, status)
-    win = Win(ship, asteroids, status)
+    lose = Lose(ship, asteroids, asteroid_spawns, status)
+    win = Win(ship, asteroids, asteroid_spawns, status)
     
-    asteroids.add(Asteroid(), Asteroid2(), Asteroid3(), Asteroid4(), Asteroid5(), Asteroid6())
+    asteroids.add(Asteroid1(), Asteroid2(), Asteroid3(), Asteroid4(), Asteroid5(), Asteroid6())
+    asteroid_spawns.add(Bits(), Bits2(), Bits3())
 
-    all_sprites.add(ship, status, asteroids) #add start, win, lose later
+    all_sprites.add(ship, status, asteroids, win, lose)
 
     game_over = False
 
@@ -375,6 +440,7 @@ def main():
             if event.type == QUIT:
                 game_over = True 
             if not game_over:
+
                 if event.type == KEYDOWN:
                     if event.key == K_DOWN:
                         ship.steer(DOWN, START)
@@ -401,14 +467,30 @@ def main():
 
         hits = pygame.sprite.spritecollide(ship, asteroids, True)
         for hit in hits:
+            pygame.mixer.Sound("sounds/houstonwearedown.wav").play()
+            ship.health -= 10
+
+        hits = pygame.sprite.spritecollide(ship, asteroid_spawns, True)
+        for hit in hits:
+            pygame.mixer.Sound("sounds/houstonwearedown.wav").play()
             ship.health -= 20
 
         for particle in weaponfire:
             hits = pygame.sprite.spritecollide(particle, asteroids, True)
             for hit in hits:
+                pygame.mixer.Sound("sounds/greatshot.wav").play()
                 weaponfire.remove(particle)
                 all_sprites.remove(particle)
                 ship.score += 10
+                all_sprites.add(asteroid_spawns)
+
+        for particle in weaponfire:
+            hits = pygame.sprite.spritecollide(particle, asteroid_spawns, True)
+            for hit in hits:
+                pygame.mixer.Sound("sounds/greatshot.wav").play()
+                weaponfire.remove(particle)
+                all_sprites.remove(particle)
+                ship.score += 15
 
         screen.blit(background, (0,0))
         all_sprites.update()
@@ -418,3 +500,5 @@ def main():
     pygame.quit()
 
 main()
+
+#perhaps add a 'Play Again' loop back to start/main upon winning/losing
