@@ -1,8 +1,9 @@
 #Andromeda
-This game created for SI 206 Project 4 and is based on Atari's Asteroids. 
+This game was created for SI 206 Project 4 and is based on Atari's Asteroids.  
 
 #Resources
 This game would not have been possible without Dr. Pepper and these web articles:
+
 http://www.pygame.org/docs/tut/intro/intro.html
 http://www.pygame.org/docs/tut/newbieguide.html
 http://www.nerdparadise.com/tech/python/pygame/basics/part2/
@@ -15,6 +16,7 @@ https://sivasantosh.wordpress.com/2012/07/16/basic-sound-handling-pygame/
 
 #Images/Sounds/Fonts
 I borrowed some stuff:
+
 http://wallarthd.com/imagepics/dark-galaxy-wallpaper-17017.html
 http://www.dafont.com/screenmatrix.font
 https://www.freesound.org/people/luckylittleraven/sounds/218346/
