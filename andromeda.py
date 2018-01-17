@@ -1,3 +1,15 @@
+# Andromeda - an Asteroids remake!
+# Sources for sounds, images, and font:
+# http://wallarthd.com/imagepics/dark-galaxy-wallpaper-17017.html
+# https://www.dafont.com/screenmatrix.font
+# https://freesound.org/people/luckylittleraven/sounds/218346/
+# https://freesound.org/people/Robinhood76/sounds/337788/
+# https://freesound.org/people/ani_music/sounds/219622/
+# https://freesound.org/people/benjaminharveydesign/sounds/315826/
+# https://freesound.org/people/unadamlar/sounds/341984/
+# https://freesound.org/people/josepharaoh99/sounds/364929/
+# https://freesound.org/people/ProjectsU012/sounds/341626/
+
 import pygame, random
 pygame.init()
 
@@ -31,7 +43,7 @@ class Start(pygame.sprite.Sprite):
         self.logo = pygame.image.load("images/andromeda.png")
         self.logo = pygame.transform.smoothscale(self.logo, (100, 200))
         title = self.font.render("ANDROMEDA", True, (3, 168, 158))
-        begin = self.font2.render("Press Enter To Start", True, (255, 255, 255))
+        begin = self.font2.render("Press Enter To Begin", True, (255, 255, 255))
         self.image.fill((0, 0, 0))
         self.image.set_colorkey((0, 0, 0))
         self.image.blit(self.logo, (35, 0))
